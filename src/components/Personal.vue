@@ -1,5 +1,5 @@
 <template>
-  <el-card class="personal" ref="personal">
+  <el-card class="personal">
     <el-row type="flex" justify="center">
       <el-avatar :size="90" :src="img"></el-avatar>
     </el-row>
@@ -69,11 +69,7 @@ export default {
       ]
     };
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.$refs.personal.$el.style.transform = "rotateY(360deg)";
-    });
-  },
+  
   methods: {
     openQQ() {
       window.location.href = "tencent://message/?uin=1367559786";
@@ -83,10 +79,6 @@ export default {
 </script>
 
 <style scoped>
-.personal {
-  transition: 1.5s;
-}
-
 .el-card {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 }

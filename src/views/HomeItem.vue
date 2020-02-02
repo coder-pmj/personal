@@ -16,7 +16,7 @@
             {{it.people}}人
           </span>
         </div>
-        <el-image  v-if="it.img"  class="item-img item-child" :src="it.img"></el-image>
+        <el-image v-if="it.img" class="item-img item-child" :src="it.img"></el-image>
         <div class="item-text">{{it.text}}</div>
         <el-button type="mini" round class="item-detail" @click="goDetail(it)">
           <i class="el-icon-document"></i>
@@ -44,7 +44,7 @@
             {{it.people}}人
           </span>
         </div>
-        <el-image v-if="it.img" class="item-img item-child" :src="it.img"></el-image>
+        <el-image v-if="it.img" class="item-img item-child" :src="it.img" @load="successLoad"></el-image>
         <div class="item-text">{{it.text}}</div>
         <el-button type="mini" round class="item-detail" @click="goDetail(it)">
           <i class="el-icon-document"></i>
@@ -115,6 +115,10 @@ export default {
         });
       }
     },
+    successLoad() {
+      this.loading = false;
+      this.flag = true;
+    },
     load() {
       this.loading = true;
       if (this.item.length === this.data.length - this.itemtop.length) {
@@ -126,10 +130,9 @@ export default {
 
       let timer = setTimeout(() => {
         this.item = this.main.slice(0, this.item.length + 1);
-        this.loading = false;
-        this.flag = true;
+
         clearTimeout(timer);
-      }, 500);
+      },400);
     },
 
     handleScroll() {
