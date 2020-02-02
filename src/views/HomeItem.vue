@@ -16,7 +16,7 @@
             {{it.people}}人
           </span>
         </div>
-        <el-image v-if="it.img" class="item-img item-child" :src="it.img"></el-image>
+        <el-image v-if="it.img" class="item-img item-child" :src="it.img" @load="successLoadTopImg"></el-image>
         <div class="item-text">{{it.text}}</div>
         <el-button type="mini" round class="item-detail" @click="goDetail(it)">
           <i class="el-icon-document"></i>
@@ -67,6 +67,7 @@ export default {
       bottom: "",
       data: [],
       itemtop: [],
+      loadItemTopflag: false,
       item: [],
       main: []
     };
@@ -78,6 +79,12 @@ export default {
     data(v) {
       if (v.length) {
         window.addEventListener("scroll", this.handleScroll);
+      }
+    },
+    loadItemTopflag(v) {
+      if (v) {
+        this.main = this.data.filter(v => !v.istop).reverse();
+        this.item = this.main.slice(0, 1);
       }
     }
   },
@@ -97,8 +104,6 @@ export default {
       let res = await getItem();
       this.data = res.data;
       this.itemtop = this.data.filter(v => v.istop);
-      this.main = this.data.filter(v => !v.istop).reverse();
-      this.item = this.main.slice(0, 1);
     },
     updatePeople(obj) {
       if (obj.istop) {
@@ -114,6 +119,9 @@ export default {
           }
         });
       }
+    },
+    successLoadTopImg() {
+      this.loadItemTopflag = true;
     },
     successLoad() {
       this.loading = false;
@@ -132,7 +140,7 @@ export default {
         this.item = this.main.slice(0, this.item.length + 1);
 
         clearTimeout(timer);
-      },400);
+      }, 400);
     },
 
     handleScroll() {
