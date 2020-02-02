@@ -68,37 +68,27 @@
       <div class="title" v-show="!playingMusic.name">{{'未知'}}</div>
 
       <el-tooltip content="上一首" placement="bottom" effect="light">
-        <i class="el-icon-d-arrow-left" @click="prep" style="cursor:pointer;font-size:20px"></i>
+        <i class="el-icon-d-arrow-left" @click="prep" style="cursor:pointer;font-size:20px;"></i>
       </el-tooltip>
       <el-tooltip content="下一首" placement="bottom" effect="light">
         <i
           class="el-icon-d-arrow-right"
           @click="next"
-          style="margin-right:6px;cursor:pointer;font-size:20px"
+          style="margin-right:6px;cursor:pointer;font-size:20px;"
         ></i>
       </el-tooltip>
-      <img
-        :src="loop?require('../assets/loop.png'):require('../assets/order.png')"
-        width="20"
+
+      <i
+        style="margin-right:6px;outline:none;font-size:25px;cursor:pointer"
+        :class="{'el-icon-refresh loop-color':loop,'el-icon-s-operation normal-color':!loop}"
         @click="loop=!loop"
-        style="margin-right:6px;outline:none"
-      />
+      ></i>
 
-      <div>
-        <i
-          v-show="!isplaying"
-          style="font-size:25px;font-weight:400;"
-          @click.stop="toogle"
-          class="el-icon-video-play"
-        ></i>
-
-        <i
-          v-show="isplaying"
-          style="font-size:25px;font-weight:400;"
-          @click.stop="toogle"
-          class="el-icon-video-pause"
-        ></i>
-      </div>
+      <i
+        style="font-size:25px;cursor:pointer"
+        @click.stop="toogle"
+        :class="{'el-icon-video-play normal-color':!isplaying,'el-icon-video-pause playing-color':isplaying}"
+      ></i>
     </div>
     <!--
 
@@ -309,9 +299,8 @@ export default {
         this.getHotData();
       }
     },
-    loop(v){
-      if(v){
-        
+    loop(v) {
+      if (v) {
       }
     }
   }
@@ -319,6 +308,12 @@ export default {
 </script>
 
 <style scoped>
+.playing-color,.loop-color {
+  color:cadetblue;
+}
+.normal-color{
+  color: lightslategray
+}
 .newbg {
   background-image: url("../assets/playing.gif");
 }
