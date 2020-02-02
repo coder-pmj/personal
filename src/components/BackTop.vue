@@ -29,7 +29,7 @@ export default {
     goTop() {
       let scrollToptimer = setInterval(function() {
         const top = document.body.scrollTop || document.documentElement.scrollTop;
-        const speed = top / 4;
+        const speed = top / 20;
         if (document.body.scrollTop != 0) {
           document.body.scrollTop -= speed;
         } else {
@@ -39,7 +39,7 @@ export default {
           // window.console.log(top)
           clearInterval(scrollToptimer);
         }
-      }, 10);
+      }, 1);
     }
   }
 };

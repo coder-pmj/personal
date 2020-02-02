@@ -83,6 +83,7 @@ export default {
     },
     loadItemTopflag(v) {
       if (v) {
+        //指定图片加载完成后才让加载下方的图片
         this.main = this.data.filter(v => !v.istop).reverse();
         this.item = this.main.slice(0, 1);
       }
