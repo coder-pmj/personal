@@ -1,6 +1,22 @@
 import { req } from '../plugins/request'
+//删除动态
+export function delItem(data) {
+    return req({
+        method: "post",
+        url: "/api/update/delItem",
+        data
+    })
+}
+//添加评论
+export function addComment(arr) {
+    return req({
+        method: "post",
+        url: "/api/update/addcomment",
+        data: arr
+    })
+}
 //更新社交账号
-export function updateCircle(data){
+export function updateCircle(data) {
     return req({
         method: 'post',
         url: '/api/update/circle',
@@ -8,26 +24,26 @@ export function updateCircle(data){
     })
 }
 //更新短语
-export function updateText(data){
+export function updateText(data) {
     return req({
-        method:'post',
-        url:'/api/update/text',
+        method: 'post',
+        url: '/api/update/text',
         data
     })
 }
 //更新标签
-export function updateTags(data){
+export function updateTags(data) {
     return req({
-        method:'post',
-        url:'/api/update/tags',
+        method: 'post',
+        url: '/api/update/tags',
         data
     })
 }
 //头像上传
-export function uploadAvatar(data){
+export function uploadAvatar(data) {
     return req({
-        method:'post',
-        url:'/api/upload/avatar',
+        method: 'post',
+        url: '/api/upload/avatar',
         data
     })
 }

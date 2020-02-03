@@ -6,21 +6,12 @@
     </el-col>
     <el-col style="width:400px">
       <el-col :span="6">
-        <a href="http://github.com/Pmj136" target="_blank" class="top-a">GitHub</a>
+        <a v-show="$route.name!='newitem'" href="/newitem" target="_blank" class="top-a">发布动态</a>
+      </el-col>
+      <el-col :span="8">
+        <a href="http://github.com/Pmj136" target="_blank" class="top-a">作者GitHub</a>
       </el-col>
 
-      <el-col :span="8">
-        <el-dropdown @command="handleCommand">
-          <span class="el-dropdown-link top-a">
-            我的活跃社区
-            <i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="csdn">csdn</el-dropdown-item>
-            <el-dropdown-item command="js">简书</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </el-col>
       <el-col :span="10">
         <a
           @mouseenter="showDetail"
@@ -47,18 +38,6 @@ export default {
     },
     hideDetail() {
       this.docschina = "印记中文";
-    },
-    handleCommand(c) {
-      switch (c) {
-        case "csdn":
-          window.open("https://www.csdn.net/");
-          break;
-        case "js":
-          window.open("https://www.jianshu.com/");
-          break;
-        default:
-          break;
-      }
     }
   }
 };

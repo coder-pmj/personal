@@ -36,6 +36,20 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/newitem',
+    component: Home,
+    children: [
+      {
+        path: "/",
+        name: 'newitem',
+        meta: {
+          title: "发布动态"
+        },
+        component: () => import('@/views/NewItem.vue')
+      }
+    ]
+  }
   /* {
     path:"/detail",
     name:"detail",

@@ -7,6 +7,9 @@ export default {
     mutations: {
         setInfo(state, arr) {
             state.info = arr
+        },
+        updateInfo(state) {
+            state.info = []
         }
     }
 }

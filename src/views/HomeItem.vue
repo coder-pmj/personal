@@ -6,7 +6,7 @@
           <a @click="goDetail(it)" class="item-a">{{it.title}}</a>
         </div>
         <div class="item-icon item-child item-icon-txt">
-          <el-tag type="danger" class="item-icon-child" effect="dark" size="mini">热门</el-tag>
+          <el-tag type="danger" class="item-icon-child" effect="dark" size="mini">推荐</el-tag>
           <span style="margin-left:20px">
             <i class="el-icon-date"></i>
             {{it.date}}
@@ -58,7 +58,9 @@
 </template>
 
 <script>
-import { getItem, addPeople } from "../api";
+import { getItem, addPeople, delItem } from "../api";
+import { getUser } from "../plugins/utils";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -75,6 +77,14 @@ export default {
   created() {
     this.initData();
   },
+  computed: {
+    ...mapState({
+      info: state => state.loginUser.info
+    }),
+    user() {
+      return this.info.length ? this.info[0].user : "";
+    }
+  },
   watch: {
     data(v) {
       if (v.length) {
@@ -89,11 +99,12 @@ export default {
       }
     }
   },
- 
+
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
+    
     goDetail(obj) {
       addPeople(obj.id, obj.people).then(() => {
         // if (res.data.flag) {

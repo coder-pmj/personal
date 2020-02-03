@@ -1,5 +1,5 @@
 <template>
-  <el-card class="personal" style="height:338px" ref="personal">
+  <el-card class="personal" ref="personal">
     <div
       @click="exit"
       style="width:10px;height:10px;position:absolute;right:15px;top:10px;font-size:20px;cursor:pointer"
@@ -204,6 +204,7 @@ export default {
       })
         .then(() => {
           this.$store.commit("loginUser/setInfo", []);
+          this.$store.commit('loginUser/updateInfo')
           removeUser();
           this.$refs.personal.style.transform = "360deg";
         })
