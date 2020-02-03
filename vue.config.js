@@ -4,7 +4,7 @@ module.exports = {
     assetsDir: 'public',
     productionSourceMap: false,
     lintOnSave:'warning',
-    configureWebpack: {
+    /* configureWebpack: {
         externals: {
             'vue': 'Vue',
             'vue-router': 'VueRouter',
@@ -12,7 +12,7 @@ module.exports = {
             'axios': 'axios',
             'element-ui':'ELEMENT'
         }
-    },
+    }, */
     devServer: {
         proxy: {
             "/api": {
