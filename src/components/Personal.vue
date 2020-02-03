@@ -177,7 +177,7 @@ export default {
           updateText({ userId, txt: "" });
           return;
         }
-        F;
+      
         updateText({ userId, txt });
       }
     },
