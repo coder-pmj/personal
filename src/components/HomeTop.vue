@@ -1,8 +1,8 @@
 <template>
   <el-row type="flex" class="top" justify="center">
     <el-col style="width:790px">
-      <router-link to="/home" tag="a" class="name">小小彭</router-link>
-      <span class="txt">一位追求梦想的IT萌新</span>
+      <router-link to="/home" tag="a" class="name">逗趣er</router-link>
+      <span class="txt">浏览天下事</span>
     </el-col>
     <el-col style="width:400px">
       <el-col :span="6">

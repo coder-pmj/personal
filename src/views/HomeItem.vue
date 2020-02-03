@@ -6,22 +6,22 @@
           <a @click="goDetail(it)" class="item-a">{{it.title}}</a>
         </div>
         <div class="item-icon item-child item-icon-txt">
-          <el-tag type="danger" class="item-icon-child" effect="dark" size="mini">置顶</el-tag>
+          <el-tag type="danger" class="item-icon-child" effect="dark" size="mini">热门</el-tag>
           <span style="margin-left:20px">
             <i class="el-icon-date"></i>
             {{it.date}}
           </span>
           <span style="margin-left:20px">
-            <i class="el-icon-reading"></i>
-            {{it.people}}人
+            <i class="el-icon-view"></i>
+            {{it.people}}
+          </span>
+          <span style="margin-left:20px">
+            <i class="el-icon-chat-dot-square"></i>
+            {{it.comment.length}}
           </span>
         </div>
         <el-image v-if="it.img" class="item-img item-child" :src="it.img" @load="successLoadTopImg"></el-image>
         <div class="item-text">{{it.text}}</div>
-        <el-button type="mini" round class="item-detail" @click="goDetail(it)">
-          <i class="el-icon-document"></i>
-          <span>查看全文</span>
-        </el-button>
       </el-card>
     </template>
 
@@ -40,16 +40,16 @@
             {{it.date}}
           </span>
           <span style="margin-left:20px">
-            <i class="el-icon-reading"></i>
-            {{it.people}}人
+            <i class="el-icon-view"></i>
+            {{it.people}}
+          </span>
+          <span style="margin-left:20px">
+            <i class="el-icon-chat-dot-square"></i>
+            {{it.comment.length}}
           </span>
         </div>
         <el-image v-if="it.img" class="item-img item-child" :src="it.img" @load="successLoad"></el-image>
         <div class="item-text">{{it.text}}</div>
-        <el-button type="mini" round class="item-detail" @click="goDetail(it)">
-          <i class="el-icon-document"></i>
-          <span>查看全文</span>
-        </el-button>
       </el-card>
     </template>
 
@@ -89,6 +89,7 @@ export default {
       }
     }
   },
+ 
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);
   },
@@ -97,13 +98,13 @@ export default {
       addPeople(obj.id, obj.people).then(() => {
         // if (res.data.flag) {
         this.updatePeople(obj);
-        this.$router.push({ path: "/detail", query: { id: obj.id } });
-        // }
+        window.open(`/detail?id=${obj.id}`);
       });
     },
     async initData() {
       let res = await getItem();
       this.data = res.data;
+
       this.itemtop = this.data.filter(v => v.istop);
     },
     updatePeople(obj) {
@@ -174,6 +175,9 @@ export default {
   color: #1890ff;
   cursor: pointer;
 }
+.item-a:hover {
+  color: red;
+}
 
 .item-icon-txt {
   color: #ccc;
@@ -192,10 +196,7 @@ export default {
   -webkit-line-clamp: 5;
   line-clamp: 5;
 }
-.item-detail {
-  float: right;
-  margin-top: 10px;
-}
+
 .bottom-wrap {
   width: 100%;
   height: 50px;

@@ -6,7 +6,7 @@
           <router-view></router-view>
         </keep-alive>
       </el-col>
-      <el-col v-if="flag" style="width:250px" class="right">
+      <el-col v-if="flag&&$route.name!='detail'" style="width:250px" class="right">
         <home-main-right></home-main-right>
       </el-col>
     </el-row>

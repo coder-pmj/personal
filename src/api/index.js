@@ -1,5 +1,20 @@
 import { req } from '../plugins/request'
-
+//登录
+export function loginRegist(data) {
+    return req({
+        method: 'post',
+        url: '/api/login',
+        data
+    })
+}
+//获取用户数据
+export function getUserInfo(data) {
+    return req({
+        method: 'post',
+        url: 'api/userinfo/get',
+        data
+    })
+}
 //获取网站访问数
 export function getVisiter() {
     return req({

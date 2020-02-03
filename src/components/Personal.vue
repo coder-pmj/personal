@@ -1,25 +1,55 @@
 <template>
   <el-card class="personal">
+    <div
+      @click="exit"
+      style="width:10px;height:10px;position:absolute;right:15px;top:10px;font-size:20px;cursor:pointer"
+    >
+      <i class="el-icon-close"></i>
+    </div>
     <el-row type="flex" justify="center">
-      <el-avatar :size="90" :src="img"></el-avatar>
+      <el-avatar :size="90" :src="data.avatar"></el-avatar>
     </el-row>
     <el-row type="flex" class="author-info" justify="center">
-      <div style="color: #1890ff;">小小彭</div>
-      <p style="color: #999;font-size:0.9rem">专注于技术的探索</p>
+      <div style="color: #1890ff;">{{data.user}}</div>
+      <p v-show="!isEdit" style="color: #999;font-size:0.9rem">{{data.text||'编辑状态'}}</p>
+      <el-input v-show="isEdit" type="text"></el-input>
       <div style="text-align:center">
-        <el-tag v-for="it in tagData" :key="it.text" :type="it.type" size="mini">
-          <a style="text-decoration: none;" :href="it.url" target="_blank">{{it.text}}</a>
-        </el-tag>
+        <el-tag
+          :key="tag.title"
+          v-for="tag in dynamicTags"
+          closable
+          size="mini"
+          :disable-transitions="false"
+          @close="handleClose(tag)"
+        >{{tag.title}}</el-tag>
+        <template v-if="dynamicTags.length<6">
+          <el-input
+            class="input-new-tag"
+            v-if="inputVisible"
+            v-model="inputValue"
+            placeholder="输入一个最长为10字符的tag"
+            ref="saveTagInput"
+            size="mini"
+            @keyup.enter.native="handleInputConfirm"
+            @blur="handleInputConfirm"
+          ></el-input>
+          <i
+            v-else
+            class="el-icon-circle-plus-outline"
+            style="cursor:pointer;color:blue"
+            @click="showInput"
+          ></i>
+        </template>
       </div>
       <el-divider content-position="center">社交账号</el-divider>
       <div>
-        <el-tooltip content="点击加我qq" placement="top">
-          <img class="img" :src="qq" width="25" alt="qq" @click="openQQ" />
+        <el-tooltip :content="data.qq" placement="top">
+          <img class="img" :src="qq" width="25" alt="qq" />
         </el-tooltip>
-        <el-tooltip content="微信号:pmj1367559786" placement="top">
+        <el-tooltip :content="data.wx" placement="top">
           <img class="img" :src="wx" width="25" alt="wx" />
         </el-tooltip>
-        <el-tooltip content="抖音号:108770474" placement="top">
+        <el-tooltip :content="data.dy" placement="top">
           <img class="img" :src="dy" width="25" alt="dy" />
         </el-tooltip>
       </div>
@@ -27,52 +57,72 @@
   </el-card>
 </template>
 
+
 <script>
+import { mapState } from "vuex";
+import { getUserInfo } from "../api";
+import { removeUser } from "../plugins/utils";
 export default {
   data() {
     return {
+      data: [],
+      inputVisible: false,
+      inputValue: "",
       img: "/api/img/avatar.jpg",
       qq: require("../assets/QQ.png"),
       wx: require("../assets/wx.png"),
       dy: require("../assets/dy.png"),
-      tagData: [
-        {
-          text: "Vue",
-          type: "",
-          url: "https://cn.vuejs.org/"
-        },
-        {
-          text: "React",
-          type: "success",
-          url: "https://react.docschina.org/"
-        },
-        {
-          text: "原生JavaScript",
-          type: "info",
-          url: "https://zh.javascript.info/"
-        },
-        {
-          text: "express",
-          type: "warning",
-          url: "http://www.expressjs.com.cn/"
-        },
-        {
-          text: "koa",
-          type: "danger",
-          url: "https://koa.bootcss.com/"
-        },
-        {
-          text: "nodejs",
-          type: "success",
-          url: "http://nodejs.cn/api/"
-        }
-      ]
+      dynamicTags: []
     };
   },
-  
+  computed: {
+    ...mapState({
+      info: state => state.loginUser.info
+    })
+  },
+  created() {
+    // window.console.log(...this.info);
+    getUserInfo(this.info[0]).then(res => {
+      this.data = res.data[0];
+      if (this.data.tag) {
+        this.dynamicTags = JSON.parse(this.data.tag);
+      }
+      // window.console.log(this.data);
+    });
+  },
   methods: {
-    openQQ() {
-      window.location.href = "tencent://message/?uin=1367559786";
+    exit() {
+      this.$confirm("确认退出登录吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$store.commit("loginUser/setInfo", []);
+          removeUser();
+        })
+        .catch(() => {});
+    },
+    handleClose(tag) {
+      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+    },
+
+    showInput() {
+      if (this.dynamicTags.length < 6) {
+        this.inputVisible = true;
+        this.$nextTick(_ => {
+          this.$refs.saveTagInput.$refs.input.focus();
+        });
+      }
+    },
+
+    handleInputConfirm() {
+      let inputValue = this.inputValue;
+      if (inputValue && inputValue.length <= 10) {
+        this.dynamicTags.push({ title: inputValue });
+      }
+      this.inputVisible = false;
+      this.inputValue = "";
     }
   }
 };

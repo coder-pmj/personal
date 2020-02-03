@@ -6,11 +6,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'welcome',
-    component: () => import('@/views/Welcome.vue'),
-    meta: {
-      title: '欢迎页'
-    }
+    redirect: '/home'
   },
   {
     path: '/home',
@@ -19,8 +15,8 @@ const routes = [
       {
         path: "/",
         name: 'home',
-        meta:{
-          title:"首页"
+        meta: {
+          title: "首页"
         },
         component: () => import('@/views/HomeItem.vue')
       }
@@ -33,8 +29,8 @@ const routes = [
       {
         path: "/",
         name: 'detail',
-        meta:{
-          title:"详情"
+        meta: {
+          title: "详情"
         },
         component: () => import('@/views/Detail.vue')
       }
