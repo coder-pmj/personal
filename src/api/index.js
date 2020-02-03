@@ -1,4 +1,36 @@
 import { req } from '../plugins/request'
+//更新社交账号
+export function updateCircle(data){
+    return req({
+        method: 'post',
+        url: '/api/update/circle',
+        data
+    })
+}
+//更新短语
+export function updateText(data){
+    return req({
+        method:'post',
+        url:'/api/update/text',
+        data
+    })
+}
+//更新标签
+export function updateTags(data){
+    return req({
+        method:'post',
+        url:'/api/update/tags',
+        data
+    })
+}
+//头像上传
+export function uploadAvatar(data){
+    return req({
+        method:'post',
+        url:'/api/upload/avatar',
+        data
+    })
+}
 //登录
 export function loginRegist(data) {
     return req({
@@ -11,7 +43,7 @@ export function loginRegist(data) {
 export function getUserInfo(data) {
     return req({
         method: 'post',
-        url: 'api/userinfo/get',
+        url: '/api/userinfo/get',
         data
     })
 }

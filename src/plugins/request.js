@@ -15,6 +15,18 @@ let loads = {
         }
     }
 }
+let personalLoad = {
+    loadingInstance: null,
+    open() {
+        this.loadingInstance = Loading.service({ target: '.personal'})
+    },
+    close() {
+        if (this.loadingInstance) {
+            this.loadingInstance.close()
+            this.loadingInstance = null
+        }
+    }
+}
 
 
 let loadMusic = {
@@ -36,6 +48,12 @@ req.interceptors.request.use(function (config) {
         }
 
     }
+    if (config.url === '/api/userinfo/get' || config.url.includes('/api/img/user')) {
+        if (!personalLoad.loadingInstance) {
+            personalLoad.open()
+        }
+
+    }
     if (config.url.lastIndexOf('/') === 14 && config.url.includes('/api/music/get/')) {
 
         if (!loadMusic.loadingInstance) {
@@ -54,7 +72,9 @@ req.interceptors.request.use(function (config) {
 req.interceptors.response.use(function (res) {
     loads.close()
     loadMusic.close()
-
+    // setTimeout(function () {
+        personalLoad.close()
+    // }, 1000)
     return res;
 }, function (error) {
     return Promise.reject(error);

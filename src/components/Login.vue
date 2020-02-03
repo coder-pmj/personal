@@ -4,7 +4,7 @@
       ref="ruleForm"
       :rules="rules"
       :model="form"
-      :label-position="labelPosition"
+      
       size="mini"
     >
       <p align="center">请先登录</p>
@@ -13,7 +13,7 @@
         <el-input v-model="form.user" placeholder="请输入您注册时的账号"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="form.password" type="password" placeholder="请输入密码"></el-input>
+        <el-input v-model="form.password" type="password" @keyup.enter.native="login('ruleForm')" placeholder="请输入密码"></el-input>
       </el-form-item>
       <el-form-item></el-form-item>
       <el-form-item>
